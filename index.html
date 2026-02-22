@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html lang="ar" dir="rtl">
 <head>
-    <meta charset="UTF-88">
+    <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>رمضان | حول فكرتك إلى تطبيق واحصد الأرباح</title>
     <!-- Font Awesome -->
@@ -9,7 +9,6 @@
     <!-- Google Fonts: Tajawal -->
     <link href="https://fonts.googleapis.com/css2?family=Tajawal:wght@400;500;700;900&display=swap" rel="stylesheet">
     <style>
-        /* Reset و متغيرات الألوان */
         * {
             margin: 0;
             padding: 0;
@@ -19,10 +18,10 @@
         :root {
             --primary: #f6b83e;
             --secondary: #f1c40f;
-            --dark: #0c0f1f;
+            --dark: #030514;      /* أغمق لإبراز النجوم */
             --light: #fff9e6;
-            --glow: rgba(255, 215, 0, 0.8);
-            --shadow: 0 20px 40px rgba(0, 0, 0, 0.6);
+            --glow: rgba(255, 215, 0, 0.9);
+            --shadow: 0 20px 40px rgba(0, 0, 0, 0.8);
         }
 
         body {
@@ -39,7 +38,7 @@
             padding: 20px;
         }
 
-        /* الخلفية الرئيسية: تدرج لوني متحرك */
+        /* خلفية داكنة جدًا مع تدرج بسيط */
         body::before {
             content: "";
             position: fixed;
@@ -47,7 +46,7 @@
             left: 0;
             width: 100%;
             height: 100%;
-            background: radial-gradient(circle at 30% 50%, #3a2c1a, #0c0f1f 70%);
+            background: radial-gradient(circle at 30% 50%, #1a140e, #020304 90%);
             z-index: -2;
         }
 
@@ -62,7 +61,7 @@
             z-index: -1;
         }
 
-        /* عناصر الخلفية الرمضانية الثابتة */
+        /* عناصر الخلفية الرمضانية */
         .ramadan-elements {
             position: fixed;
             top: 0;
@@ -73,48 +72,52 @@
             z-index: 0;
         }
 
+        /* الهلال: واضح جدًا */
         .crescent {
             position: absolute;
             top: 5%;
             left: 5%;
-            font-size: 100px;
-            filter: drop-shadow(0 0 30px #f9a825);
-            animation: rotateGlow 8s infinite alternate;
+            font-size: 120px;          /* أكبر */
+            filter: drop-shadow(0 0 40px #ffaa00) drop-shadow(0 0 80px #f9a825);
+            opacity: 1;                 /* غير شفاف */
+            animation: rotateGlow 5s infinite alternate;
+            text-shadow: 0 0 30px gold, 0 0 60px orange;
         }
 
         @keyframes rotateGlow {
-            0% { transform: rotate(0deg) scale(1); filter: drop-shadow(0 0 20px #ffb300); }
-            100% { transform: rotate(5deg) scale(1.1); filter: drop-shadow(0 0 60px #ffd700); }
+            0% { transform: rotate(-5deg) scale(1); filter: drop-shadow(0 0 40px #ffb300); }
+            100% { transform: rotate(5deg) scale(1.1); filter: drop-shadow(0 0 80px #ffd700); }
         }
 
+        /* الفوانيس (تبقى كما هي) */
         .lantern {
             position: absolute;
-            font-size: 60px;
-            filter: drop-shadow(0 0 20px gold);
-            animation: floatSwing 5s infinite ease-in-out;
+            font-size: 70px;
+            filter: drop-shadow(0 0 30px gold);
+            animation: floatSwing 6s infinite ease-in-out;
             transform-origin: top center;
         }
 
         @keyframes floatSwing {
             0% { transform: translateY(0) rotate(3deg); }
-            50% { transform: translateY(-15px) rotate(-3deg); }
+            50% { transform: translateY(-20px) rotate(-3deg); }
             100% { transform: translateY(0) rotate(3deg); }
         }
 
         .lantern1 { top: 15%; right: 8%; animation-delay: 0s; }
-        .lantern2 { bottom: 20%; left: 3%; font-size: 80px; animation-delay: 1.5s; }
-        .lantern3 { top: 40%; left: 15%; font-size: 70px; animation-delay: 0.8s; }
+        .lantern2 { bottom: 20%; left: 3%; font-size: 90px; animation-delay: 1.5s; }
+        .lantern3 { top: 40%; left: 15%; font-size: 80px; animation-delay: 0.8s; }
         .lantern4 { bottom: 10%; right: 15%; animation-delay: 2s; }
 
-        /* تأثير أشعة الضوء المتحركة */
+        /* أشعة ضوئية خفيفة */
         .light-rays {
             position: fixed;
             top: -50%;
             left: -50%;
             width: 200%;
             height: 200%;
-            background: repeating-linear-gradient(45deg, rgba(255,215,0,0.05) 0px, rgba(255,215,0,0.05) 20px, transparent 20px, transparent 40px);
-            animation: raysMove 30s linear infinite;
+            background: repeating-linear-gradient(45deg, rgba(255,215,0,0.1) 0px, rgba(255,215,0,0.1) 20px, transparent 20px, transparent 40px);
+            animation: raysMove 40s linear infinite;
             pointer-events: none;
             z-index: 0;
         }
@@ -124,223 +127,59 @@
             to { transform: rotate(360deg); }
         }
 
-        /* البطاقة الرئيسية */
+        /* البطاقة الرئيسية (تعديل الشفافية قليلاً لتظهر الخلفية) */
         .landing-card {
             position: relative;
             z-index: 10;
             max-width: 1000px;
             width: 100%;
-            background: rgba(10, 15, 30, 0.5);
-            backdrop-filter: blur(15px);
-            -webkit-backdrop-filter: blur(15px);
-            border: 2px solid rgba(255, 215, 0, 0.3);
+            background: rgba(5, 8, 15, 0.6); /* أغمق قليلاً */
+            backdrop-filter: blur(12px);
+            -webkit-backdrop-filter: blur(12px);
+            border: 2px solid rgba(255, 215, 0, 0.4);
             border-radius: 80px 20px 80px 20px;
             padding: 60px 50px;
-            box-shadow: 0 30px 70px rgba(0,0,0,0.7), 0 0 50px var(--glow);
+            box-shadow: 0 30px 70px rgba(0,0,0,0.8), 0 0 70px var(--glow);
             transition: box-shadow 0.5s;
             animation: borderPulse 3s infinite alternate;
         }
 
         @keyframes borderPulse {
-            0% { border-color: rgba(255, 215, 0, 0.3); box-shadow: 0 30px 70px rgba(0,0,0,0.7), 0 0 30px #f1c40f; }
-            100% { border-color: rgba(255, 215, 0, 0.8); box-shadow: 0 40px 90px rgba(0,0,0,0.9), 0 0 80px #f39c12; }
+            0% { border-color: rgba(255, 215, 0, 0.4); box-shadow: 0 30px 70px rgba(0,0,0,0.8), 0 0 50px #f1c40f; }
+            100% { border-color: rgba(255, 215, 0, 0.9); box-shadow: 0 40px 90px rgba(0,0,0,1), 0 0 100px #f39c12; }
         }
 
-        /* العنوان الرئيسي مع تأثير كتابة */
-        h1 {
-            font-size: 3.5rem;
-            font-weight: 900;
-            line-height: 1.3;
-            margin-bottom: 20px;
-            min-height: 140px;
-        }
+        /* باقي الأنماط كما هي (لم تتغير) */
+        h1 { font-size: 3.5rem; font-weight: 900; line-height: 1.3; margin-bottom: 20px; min-height: 140px; }
+        .dynamic-text { background: linear-gradient(135deg, #f6e58d, #ffb347, #f3a683); -webkit-background-clip: text; -webkit-text-fill-color: transparent; text-shadow: 0 0 30px rgba(255,215,0,0.5); display: inline-block; }
+        .typewriter { border-left: 4px solid #f1c40f; padding-left: 10px; }
+        .countdown { display: flex; gap: 20px; justify-content: center; margin: 30px 0; flex-wrap: wrap; }
+        .countdown-item { background: rgba(0, 0, 0, 0.6); backdrop-filter: blur(5px); border-radius: 20px; padding: 15px 25px; min-width: 100px; text-align: center; border: 1px solid #f1c40f; box-shadow: 0 0 20px #f1c40f; }
+        .countdown-item span { display: block; font-size: 2.5rem; font-weight: 900; color: #ffd966; }
+        .countdown-item small { font-size: 1.2rem; opacity: 0.9; }
+        .features-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 25px; margin: 50px 0; }
+        .feature-card { background: rgba(255,255,255,0.05); border: 1px solid rgba(255,215,0,0.2); border-radius: 40px 10px 40px 10px; padding: 30px 15px; text-align: center; transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275); position: relative; overflow: hidden; }
+        .feature-card::before { content: ""; position: absolute; top: -50%; left: -50%; width: 200%; height: 200%; background: radial-gradient(circle, rgba(255,215,0,0.2) 0%, transparent 70%); opacity: 0; transition: opacity 0.5s; transform: rotate(30deg); }
+        .feature-card:hover { transform: translateY(-15px) scale(1.02); border-color: #f39c12; box-shadow: 0 30px 40px rgba(241, 196, 15, 0.3); }
+        .feature-card:hover::before { opacity: 1; }
+        .feature-card i { font-size: 3.5rem; color: #ffd966; margin-bottom: 20px; filter: drop-shadow(0 0 15px gold); transition: transform 0.3s; }
+        .feature-card:hover i { transform: scale(1.2) rotate(5deg); }
+        .why-us { background: rgba(0, 0, 0, 0.5); border-radius: 70px 10px 70px 10px; padding: 40px; margin: 40px 0; border: 2px dashed #f1c40f; position: relative; backdrop-filter: blur(8px); text-align: center; }
+        .why-us h2 { font-size: 3rem; color: #ffe083; margin-bottom: 20px; text-shadow: 0 0 20px orange; }
+        .cta-button { display: inline-flex; align-items: center; justify-content: center; gap: 15px; background: linear-gradient(45deg, #f39c12, #f1c40f); color: #1e272e; font-size: 2.2rem; font-weight: 900; padding: 25px 70px; border-radius: 120px; text-decoration: none; box-shadow: 0 15px 0 #b7740b, 0 30px 50px rgba(241, 196, 15, 0.6); transition: all 0.2s ease; border: 3px solid #fff3b0; margin: 30px auto 20px; position: relative; overflow: hidden; animation: pulse 2s infinite; }
+        .cta-button:hover { transform: translateY(8px); box-shadow: 0 7px 0 #b7740b, 0 40px 60px rgba(241, 196, 15, 0.8); }
+        @keyframes pulse { 0% { box-shadow: 0 15px 0 #b7740b, 0 0 30px #f1c40f; } 50% { box-shadow: 0 15px 0 #b7740b, 0 0 80px #f39c12; } 100% { box-shadow: 0 15px 0 #b7740b, 0 0 30px #f1c40f; } }
+        .cta-button i { font-size: 2.5rem; transition: transform 0.3s; }
+        .cta-button:hover i { transform: translateX(-10px); }
+        footer { text-align: center; margin-top: 50px; opacity: 0.9; font-size: 1.2rem; }
 
-        .dynamic-text {
-            background: linear-gradient(135deg, #f6e58d, #ffb347, #f3a683);
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-            text-shadow: 0 0 30px rgba(255,215,0,0.5);
-            display: inline-block;
-        }
-
-        .typewriter {
-            border-left: 4px solid #f1c40f;
-            padding-left: 10px;
-        }
-
-        /* العد التنازلي */
-        .countdown {
-            display: flex;
-            gap: 20px;
-            justify-content: center;
-            margin: 30px 0;
-            flex-wrap: wrap;
-        }
-
-        .countdown-item {
-            background: rgba(0, 0, 0, 0.5);
-            backdrop-filter: blur(5px);
-            border-radius: 20px;
-            padding: 15px 25px;
-            min-width: 100px;
-            text-align: center;
-            border: 1px solid #f1c40f;
-            box-shadow: 0 0 20px #f1c40f;
-        }
-
-        .countdown-item span {
-            display: block;
-            font-size: 2.5rem;
-            font-weight: 900;
-            color: #ffd966;
-        }
-
-        .countdown-item small {
-            font-size: 1.2rem;
-            opacity: 0.8;
-        }
-
-        /* شبكة الخدمات */
-        .features-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
-            gap: 25px;
-            margin: 50px 0;
-        }
-
-        .feature-card {
-            background: rgba(255,255,255,0.03);
-            border: 1px solid rgba(255,215,0,0.2);
-            border-radius: 40px 10px 40px 10px;
-            padding: 30px 15px;
-            text-align: center;
-            transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
-            position: relative;
-            overflow: hidden;
-        }
-
-        .feature-card::before {
-            content: "";
-            position: absolute;
-            top: -50%;
-            left: -50%;
-            width: 200%;
-            height: 200%;
-            background: radial-gradient(circle, rgba(255,215,0,0.2) 0%, transparent 70%);
-            opacity: 0;
-            transition: opacity 0.5s;
-            transform: rotate(30deg);
-        }
-
-        .feature-card:hover {
-            transform: translateY(-15px) scale(1.02);
-            border-color: #f39c12;
-            box-shadow: 0 30px 40px rgba(241, 196, 15, 0.3);
-        }
-
-        .feature-card:hover::before {
-            opacity: 1;
-        }
-
-        .feature-card i {
-            font-size: 3.5rem;
-            color: #ffd966;
-            margin-bottom: 20px;
-            filter: drop-shadow(0 0 15px gold);
-            transition: transform 0.3s;
-        }
-
-        .feature-card:hover i {
-            transform: scale(1.2) rotate(5deg);
-        }
-
-        /* قسم لماذا نحن */
-        .why-us {
-            background: rgba(0, 0, 0, 0.4);
-            border-radius: 70px 10px 70px 10px;
-            padding: 40px;
-            margin: 40px 0;
-            border: 2px dashed #f1c40f;
-            position: relative;
-            backdrop-filter: blur(8px);
-            text-align: center;
-        }
-
-        .why-us h2 {
-            font-size: 3rem;
-            color: #ffe083;
-            margin-bottom: 20px;
-            text-shadow: 0 0 20px orange;
-        }
-
-        /* زر الدعوة مع تأثيرات */
-        .cta-button {
-            display: inline-flex;
-            align-items: center;
-            justify-content: center;
-            gap: 15px;
-            background: linear-gradient(45deg, #f39c12, #f1c40f);
-            color: #1e272e;
-            font-size: 2.2rem;
-            font-weight: 900;
-            padding: 25px 70px;
-            border-radius: 120px;
-            text-decoration: none;
-            box-shadow: 0 15px 0 #b7740b, 0 30px 50px rgba(241, 196, 15, 0.6);
-            transition: all 0.2s ease;
-            border: 3px solid #fff3b0;
-            margin: 30px auto 20px;
-            position: relative;
-            overflow: hidden;
-            animation: pulse 2s infinite;
-        }
-
-        .cta-button:hover {
-            transform: translateY(8px);
-            box-shadow: 0 7px 0 #b7740b, 0 40px 60px rgba(241, 196, 15, 0.8);
-        }
-
-        @keyframes pulse {
-            0% { box-shadow: 0 15px 0 #b7740b, 0 0 30px #f1c40f; }
-            50% { box-shadow: 0 15px 0 #b7740b, 0 0 70px #f39c12; }
-            100% { box-shadow: 0 15px 0 #b7740b, 0 0 30px #f1c40f; }
-        }
-
-        .cta-button i {
-            font-size: 2.5rem;
-            transition: transform 0.3s;
-        }
-
-        .cta-button:hover i {
-            transform: translateX(-10px);
-        }
-
-        /* تذييل */
-        footer {
-            text-align: center;
-            margin-top: 50px;
-            opacity: 0.8;
-            font-size: 1.2rem;
-        }
-
-        /* تأثير النقر لاطلاق المدافع */
-        .cannon-click-area {
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            z-index: 100;
-            pointer-events: none;
-        }
-
-        /* استجابة */
         @media (max-width: 768px) {
             h1 { font-size: 2.2rem; }
             .landing-card { padding: 30px 20px; }
             .cta-button { font-size: 1.5rem; padding: 15px 30px; }
             .countdown-item { min-width: 70px; padding: 10px; }
             .countdown-item span { font-size: 1.8rem; }
+            .crescent { font-size: 80px; top: 2%; left: 2%; }
         }
     </style>
 </head>
@@ -358,9 +197,6 @@
     <!-- قماش الجسيمات المتحركة (النجوم) -->
     <canvas id="particle-canvas"></canvas>
 
-    <!-- منطقة إطلاق المدافع (غير مرئية) -->
-    <div class="cannon-click-area" id="cannonArea"></div>
-
     <!-- البطاقة الرئيسية -->
     <div class="landing-card">
         <h1>
@@ -368,17 +204,13 @@
         </h1>
 
         <!-- العد التنازلي لرمضان -->
-        <div class="countdown" id="countdown">
-            <!-- يتم تعبئتها بواسطة JS -->
-        </div>
+        <div class="countdown" id="countdown"></div>
 
-        <!-- رسالة الترحيب -->
-        <div class="lead" style="font-size: 1.8rem; margin-bottom: 30px; padding: 20px; background: rgba(0,0,0,0.3); border-radius: 50px; border-right: 5px solid #f39c12;">
+        <div class="lead" style="font-size: 1.8rem; margin-bottom: 30px; padding: 20px; background: rgba(0,0,0,0.4); border-radius: 50px; border-right: 5px solid #f39c12;">
             <i class="fas fa-moon" style="margin-left: 10px;"></i>
-            هل عندك فكرة لتطبيق أو مشروع رقمي؟ نحولها لواقع ملموس و أرباح حقيقية.
+            هل عندك فكرة لتطبيق أو مشروع رقمي؟ نحولها لواقع ملموس وأرباح حقيقية.
         </div>
 
-        <!-- ماذا نقدم -->
         <h2 style="font-size: 2.8rem; margin: 40px 0 20px;"><i class="fas fa-gift"></i> ماذا نقدم لك؟</h2>
         <div class="features-grid">
             <div class="feature-card"><i class="fas fa-paint-brush"></i><h3>تصميم واجهات حديثة</h3><p>سريعة ومناسبة لكل الأجهزة.</p></div>
@@ -388,13 +220,11 @@
             <div class="feature-card"><i class="fas fa-headset"></i><h3>دعم كامل</h3><p>لضمان استمرارية عملك.</p></div>
         </div>
 
-        <!-- لماذا نحن -->
         <div class="why-us">
             <h2><i class="fas fa-fire"></i> لماذا نحن؟</h2>
             <p style="font-size: 1.8rem; line-height: 1.6;">نركز على <strong>رفع المبيعات</strong> وتحقيق نتائج حقيقية، مش بس تصميم جميل. تجربة مستخدم ممتازة وأهداف تتحقق بسرعة.</p>
         </div>
 
-        <!-- دعوة للتحرك -->
         <a href="#" class="cta-button" id="cta">
             💚 احجز استشارة مجانية
             <i class="fas fa-arrow-left"></i>
@@ -405,11 +235,11 @@
         </footer>
     </div>
 
-    <!-- مكتبات خارجية: canvas-confetti و moment.js للعد التنازلي (اختياري) -->
+    <!-- المكتبات والكود -->
     <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1"></script>
     <script>
         (function() {
-            // ========== 1. نظام الجسيمات (النجوم المتلألئة) ==========
+            // ========== 1. نظام الجسيمات (النجوم) المحسن ==========
             const canvas = document.getElementById('particle-canvas');
             const ctx = canvas.getContext('2d');
             let width, height;
@@ -421,16 +251,18 @@
                 canvas.width = width;
                 canvas.height = height;
 
-                const particleCount = 100;
+                const particleCount = 200; // أكثر
                 for (let i = 0; i < particleCount; i++) {
                     particles.push({
                         x: Math.random() * width,
                         y: Math.random() * height,
-                        radius: Math.random() * 2 + 1,
-                        speedX: (Math.random() - 0.5) * 0.5,
-                        speedY: (Math.random() - 0.5) * 0.5,
-                        opacity: Math.random() * 0.7 + 0.3,
-                        color: `hsl(${Math.random() * 60 + 30}, 80%, 70%)`, // ألوان ذهبية/صفراء
+                        radius: Math.random() * 4 + 2, // أكبر (2-6px)
+                        speedX: (Math.random() - 0.5) * 0.2, // أبطأ
+                        speedY: (Math.random() - 0.5) * 0.2,
+                        opacity: Math.random() * 0.8 + 0.3, // أكثر وضوحًا
+                        // ألوان ذهبية وبيضاء بشكل أساسي
+                        color: `hsl(${Math.random() * 30 + 45}, 90%, 70%)`, // 45-75 درجة أصفر/ذهبي
+                        glow: Math.random() * 20 + 10,
                     });
                 }
             }
@@ -441,14 +273,16 @@
                     ctx.beginPath();
                     ctx.arc(p.x, p.y, p.radius, 0, Math.PI * 2);
                     ctx.fillStyle = p.color;
+                    ctx.shadowColor = 'gold';
+                    ctx.shadowBlur = p.glow;
                     ctx.globalAlpha = p.opacity;
                     ctx.fill();
 
-                    // حركة بسيطة
+                    // حركة بطيئة
                     p.x += p.speedX;
                     p.y += p.speedY;
 
-                    // إعادة تدوير عند الخروج
+                    // إعادة تدوير
                     if (p.x < 0) p.x = width;
                     if (p.x > width) p.x = 0;
                     if (p.y < 0) p.y = height;
@@ -464,7 +298,7 @@
             initParticles();
             drawParticles();
 
-            // ========== 2. تأثير الكتابة الديناميكية (Typewriter) ==========
+            // ========== 2. تأثير الكتابة الديناميكية ==========
             const headlineEl = document.getElementById('headline');
             const phrases = [
                 '🚀 حوّل فكرتك إلى تطبيق احترافي',
@@ -505,10 +339,7 @@
             function getRamadanDate() {
                 const now = new Date();
                 const year = now.getFullYear();
-                // رمضان يبدأ تقريباً (حسابي تقريبي - يمكن ضبطه)
-                // للحصول على دقة، يُفضل استخدام API ولكن سنضع تاريخ تقريبي: 1 رمضان 1446 هـ يوافق حوالي 1 مارس 2025 (للتوضيح)
-                // هنا نستخدم تاريخ 1 مارس 2025 كمثال، ولكن يمكن تعديله.
-                let ramadanStart = new Date(year, 2, 1); // 1 مارس
+                let ramadanStart = new Date(year, 2, 1); // 1 مارس (تقريبي)
                 if (now > ramadanStart) {
                     ramadanStart.setFullYear(year + 1);
                 }
@@ -543,32 +374,64 @@
             // ========== 4. مدافع وألعاب نارية ==========
             function fireCannon(originX = 0.5, originY = 0.7) {
                 confetti({
-                    particleCount: 80,
-                    spread: 100,
+                    particleCount: 100,
+                    spread: 120,
                     origin: { x: originX, y: originY },
                     startVelocity: 30,
-                    colors: ['#ffd966', '#ffaa00', '#ff6f00', '#f9a825', '#ffffff', '#f1c40f', '#e67e22']
+                    colors: ['#ffd966', '#ffaa00', '#ff6f00', '#f9a825', '#ffffff', '#f1c40f', '#e67e22', '#ffb300']
                 });
                 confetti({
-                    particleCount: 50,
-                    spread: 60,
+                    particleCount: 70,
+                    spread: 80,
                     origin: { x: 1 - originX, y: originY + 0.1 },
                     startVelocity: 35,
-                    colors: ['#f39c12', '#d35400', '#f1c40f', '#ffb300']
+                    colors: ['#f39c12', '#d35400', '#f1c40f', '#ffb347']
                 });
                 confetti({
-                    particleCount: 120,
-                    spread: 120,
+                    particleCount: 150,
+                    spread: 150,
                     origin: { x: 0.5, y: 0.9 },
                     startVelocity: 40,
-                    colors: ['#ffb347', '#ff8c00', '#ff4500', '#ffd700']
+                    colors: ['#ffb347', '#ff8c00', '#ff4500', '#ffd700', '#ffee88']
                 });
             }
 
-            // إطلاق تلقائي كل 2.5 ثانية
             setInterval(() => {
                 fireCannon(Math.random() * 0.8 + 0.1, Math.random() * 0.3 + 0.5);
             }, 2500);
 
-            // إطلاق عند النقر في أي مكان
-        
+            document.body.addEventListener('click', (e) => {
+                const x = e.clientX / window.innerWidth;
+                const y = e.clientY / window.innerHeight;
+                fireCannon(x, y);
+            });
+
+            document.getElementById('cta').addEventListener('mouseenter', () => {
+                fireCannon(0.5, 0.8);
+            });
+
+            window.addEventListener('load', () => {
+                fireCannon(0.2, 0.6);
+                fireCannon(0.8, 0.7);
+            });
+
+            // ========== 5. حركة الفوانيس مع الماوس ==========
+            const lanterns = document.querySelectorAll('.lantern');
+            document.addEventListener('mousemove', (e) => {
+                const moveX = (e.clientX / window.innerWidth - 0.5) * 20;
+                const moveY = (e.clientY / window.innerHeight - 0.5) * 20;
+                lanterns.forEach((lantern, index) => {
+                    const speed = 1 + index * 0.2;
+                    lantern.style.transform = `translate(${moveX * speed}px, ${moveY * speed}px) rotate(${moveX * 0.5}deg)`;
+                });
+            });
+
+            // ========== 6. إضاءة متغيرة على البطاقة ==========
+            const card = document.querySelector('.landing-card');
+            setInterval(() => {
+                card.style.boxShadow = `0 30px 70px rgba(0,0,0,0.8), 0 0 ${Math.random() * 60 + 50}px var(--glow)`;
+            }, 800);
+        })();
+    </script>
+</body>
+    </html>
