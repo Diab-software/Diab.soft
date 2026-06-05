@@ -1,47 +1,36 @@
 # Diab.softoer
 
+Company Name: Diab-softoer
 
-Startup Name: Diab-softoer
+What is Diab-softoer?
+Diab-softoer is a new software company. It builds simple digital tools for very small businesses.
 
-What we do:
-We build easy software for small businesses.
+The problem we see in the market:
+Big software companies make complex programs. Small shop owners and street vendors cannot use them. They need help, but no one helps them.
 
-The problem:
-Most software is too hard. It has too many buttons. Small business owners give up and use paper.
+Our company mission:
+To make one easy software for every small business in our city. No training. No confusion.
 
-Our solution:
-Diab-softoer makes one simple program. It does only three things:
+Who founded the company:
+One person. His name is Diab. He is a programmer who worked with small shops before.
 
-1. Track daily sales.
-2. Track expenses.
-3. Show profit at the end of the day.
+Our company values:
 
-Why it is simple:
+1. Simple – we never add extra buttons.
+2. Cheap – our prices are low for small budgets.
+3. Helpful – we answer the phone when a customer calls.
 
-· Only three big buttons on the main screen.
-· No confusing menus.
-· Works without internet.
-· No need to create an account.
+What our company does (the business):
+We make and sell ready-to-use software. We also offer phone support. We do not make custom software for big companies.
 
-Who will use it:
+Our customers:
+Small coffee shops, food carts, vegetable stands, and corner stores.
 
-· Small coffee shops.
-· Food trucks.
-· Small grocery stores.
+How our company makes money:
+We sell a software license once. We do not ask for monthly payments. Later, we may sell a yearly support package.
 
-How we make money:
-One time payment: $15. Free updates for one year.
+Our company today:
+Just Diab. He writes the code, answers the phone, and sells to customers. Tomorrow, he may hire one helper.
 
-Our team:
-One developer who owns the company.
-
-Next steps:
-
-1. Build a working version in 10 days.
-2. Give it free to 3 local shops.
-3. Get their feedback.
-4. Fix problems.
-5. Sell to 50 shops.
-
-Why choose Diab-softoer?
-Because we do not add extra features. We keep it simple
+Why Diab-softoer is different from other software companies:
+Other companies want to grow big and add many features. Diab-softoer wants to stay small and keep things simple
