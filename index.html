@@ -3,11 +3,13 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>رمضان | حول فكرتك إلى تطبيق واحصد الأرباح</title>
+    <title>TRIX | حول فكرتك إلى تطبيق واحصد الأرباح</title>
     <!-- Font Awesome 6 -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
-    <!-- Google Fonts: Tajawal -->
-    <link href="https://fonts.googleapis.com/css2?family=Tajawal:wght@400;500;700;900&display=swap" rel="stylesheet">
+    <!-- Google Fonts: Tajawal + Plus Jakarta Sans -->
+    <link href="https://fonts.googleapis.com/css2?family=Tajawal:wght@400;500;700;900&family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+    <!-- AOS Library -->
+    <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet">
     <style>
         * {
             margin: 0;
@@ -16,21 +18,27 @@
         }
 
         body {
-            font-family: 'Tajawal', sans-serif;
-            background: #010314;
+            font-family: 'Tajawal', 'Plus Jakarta Sans', sans-serif;
+            background: #0a0c15;
             color: #fff;
-            min-height: 100vh;
-            display: flex;
-            align-items: center;
-            justify-content: center;
             overflow-x: hidden;
-            position: relative;
-            margin: 0;
-            padding: 20px;
+            scroll-behavior: smooth;
         }
 
-        /* الخلفية الرئيسية: Canvas متحرك */
-        #ramadanCanvas {
+        /* إعدادات الشريط الجانبي */
+        ::-webkit-scrollbar {
+            width: 8px;
+        }
+        ::-webkit-scrollbar-track {
+            background: #1a1d2b;
+        }
+        ::-webkit-scrollbar-thumb {
+            background: #f39c12;
+            border-radius: 10px;
+        }
+
+        /* خلفية 3D متحركة */
+        #canvas-bg {
             position: fixed;
             top: 0;
             left: 0;
@@ -40,547 +48,515 @@
             pointer-events: none;
         }
 
-        /* طبقات إضاءة إضافية */
-        .overlay-glow {
+        /* شريط التنقل العصري */
+        .navbar {
             position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background: radial-gradient(circle at 30% 40%, rgba(255, 215, 0, 0.15) 0%, transparent 50%);
-            pointer-events: none;
-            z-index: 1;
+            top: 20px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 85%;
+            max-width: 1200px;
+            background: rgba(15, 20, 35, 0.6);
+            backdrop-filter: blur(20px);
+            border-radius: 80px;
+            padding: 15px 40px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            z-index: 1000;
+            border: 1px solid rgba(255, 215, 0, 0.2);
+            box-shadow: 0 10px 30px rgba(0,0,0,0.3);
+            transition: all 0.3s;
         }
-
-        /* البطاقة الرئيسية مع تأثير زجاجي متطور */
-        .landing-card {
-            position: relative;
-            z-index: 10;
-            max-width: 1100px;
-            width: 100%;
-            background: rgba(5, 8, 20, 0.4);
-            backdrop-filter: blur(20px) saturate(180%);
-            -webkit-backdrop-filter: blur(20px) saturate(180%);
-            border: 2px solid rgba(255, 215, 0, 0.3);
-            border-radius: 80px 20px 80px 20px;
-            padding: 70px 60px;
-            box-shadow: 0 40px 80px rgba(0, 0, 0, 0.9), 0 0 100px rgba(255, 215, 0, 0.5);
-            transition: box-shadow 0.5s, border-color 0.5s;
-            animation: cardPulse 4s infinite alternate;
+        .navbar.scrolled {
+            top: 10px;
+            background: rgba(10, 12, 25, 0.9);
+            border-color: #f39c12;
+            box-shadow: 0 5px 25px rgba(0,0,0,0.5), 0 0 20px rgba(243,156,18,0.3);
         }
-
-        @keyframes cardPulse {
-            0% { border-color: rgba(255, 215, 0, 0.3); box-shadow: 0 40px 80px rgba(0, 0, 0, 0.9), 0 0 70px rgba(255, 215, 0, 0.4); }
-            100% { border-color: rgba(255, 215, 0, 0.9); box-shadow: 0 50px 100px rgba(0, 0, 0, 1), 0 0 150px rgba(255, 215, 0, 0.9); }
-        }
-
-        /* العنوان مع تأثير الظل النابض */
-        h1 {
-            font-size: 4rem;
+        .logo {
+            font-size: 2rem;
             font-weight: 900;
-            line-height: 1.3;
-            margin-bottom: 30px;
-            text-align: center;
-        }
-
-        .dynamic-text {
-            background: linear-gradient(135deg, #f6e58d, #ffb347, #f3a683, #ffd966);
+            background: linear-gradient(135deg, #f6e58d, #f39c12);
             -webkit-background-clip: text;
             -webkit-text-fill-color: transparent;
-            background-size: 300% 300%;
-            animation: gradientShift 5s ease infinite;
-            display: inline-block;
-            filter: drop-shadow(0 0 30px rgba(255, 215, 0, 0.8));
+        }
+        .nav-links {
+            display: flex;
+            gap: 35px;
+        }
+        .nav-links a {
+            color: #eee;
+            text-decoration: none;
+            font-weight: 600;
+            transition: 0.3s;
+            font-size: 1.2rem;
+        }
+        .nav-links a:hover {
+            color: #f39c12;
+            text-shadow: 0 0 8px gold;
+        }
+        .nav-btn {
+            background: rgba(243,156,18,0.2);
+            padding: 10px 25px;
+            border-radius: 50px;
+            border: 1px solid #f39c12;
+        }
+        .nav-btn:hover {
+            background: #f39c12;
+            color: #0a0c15 !important;
         }
 
-        @keyframes gradientShift {
+        /* المحتوى الرئيسي */
+        .container {
+            position: relative;
+            z-index: 5;
+            max-width: 1300px;
+            margin: 0 auto;
+            padding: 120px 40px 80px;
+        }
+
+        /* البطاقة الرئيسية بتأثير زجاجي متطور */
+        .hero {
+            background: rgba(15, 20, 35, 0.4);
+            backdrop-filter: blur(15px);
+            border-radius: 60px;
+            padding: 60px;
+            border: 1px solid rgba(255,215,0,0.3);
+            box-shadow: 0 30px 50px rgba(0,0,0,0.5), inset 0 1px 1px rgba(255,255,255,0.1);
+            text-align: center;
+            margin-bottom: 80px;
+        }
+        .hero h1 {
+            font-size: 4.2rem;
+            font-weight: 800;
+            margin-bottom: 30px;
+        }
+        .gradient-text {
+            background: linear-gradient(135deg, #FFD700, #FF8C00, #FFD700);
+            background-size: 200% auto;
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            animation: shine 3s linear infinite;
+        }
+        @keyframes shine {
             0% { background-position: 0% 50%; }
-            50% { background-position: 100% 50%; }
-            100% { background-position: 0% 50%; }
+            100% { background-position: 200% 50%; }
         }
-
-        /* العد التنازلي بتصميم مضيء */
-        .countdown {
+        .hero p {
+            font-size: 1.6rem;
+            opacity: 0.9;
+            max-width: 800px;
+            margin: 0 auto 40px;
+        }
+        .btn-group {
             display: flex;
             gap: 25px;
             justify-content: center;
-            margin: 40px 0;
             flex-wrap: wrap;
         }
+        .btn {
+            padding: 18px 45px;
+            font-size: 1.4rem;
+            font-weight: 700;
+            border-radius: 50px;
+            text-decoration: none;
+            transition: all 0.3s cubic-bezier(0.2, 0.9, 0.4, 1.1);
+            display: inline-flex;
+            align-items: center;
+            gap: 12px;
+            border: none;
+            cursor: pointer;
+        }
+        .btn-primary {
+            background: linear-gradient(45deg, #f39c12, #f1c40f);
+            color: #1e1e2a;
+            box-shadow: 0 10px 20px rgba(243,156,18,0.4);
+        }
+        .btn-primary:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 20px 35px rgba(243,156,18,0.6);
+        }
+        .btn-secondary {
+            background: rgba(255,255,255,0.05);
+            border: 2px solid #f39c12;
+            color: #fff;
+        }
+        .btn-secondary:hover {
+            background: #f39c12;
+            color: #0a0c15;
+            transform: translateY(-5px);
+        }
 
-        .countdown-item {
-            background: rgba(0, 0, 0, 0.6);
-            backdrop-filter: blur(8px);
-            border-radius: 30px;
-            padding: 20px 30px;
-            min-width: 120px;
+        /* شبكة الخدمات بتصميم بطاقات عصري */
+        .section-title {
+            font-size: 3rem;
             text-align: center;
-            border: 2px solid #f1c40f;
-            box-shadow: 0 0 30px #f1c40f, inset 0 0 20px rgba(255, 215, 0, 0.3);
-            transition: transform 0.3s;
+            margin: 80px 0 50px;
+            position: relative;
         }
-
-        .countdown-item:hover {
-            transform: scale(1.1);
+        .section-title:after {
+            content: '';
+            width: 100px;
+            height: 4px;
+            background: #f39c12;
+            position: absolute;
+            bottom: -15px;
+            left: 50%;
+            transform: translateX(-50%);
+            border-radius: 5px;
         }
-
-        .countdown-item span {
-            display: block;
-            font-size: 3.2rem;
-            font-weight: 900;
-            color: #ffd966;
-            text-shadow: 0 0 20px gold;
-        }
-
-        .countdown-item small {
-            font-size: 1.3rem;
-            opacity: 0.9;
-        }
-
-        /* شبكة الخدمات بتأثير 3D */
         .features-grid {
             display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
-            gap: 30px;
-            margin: 60px 0;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 40px;
+            margin: 50px 0;
         }
-
         .feature-card {
-            background: rgba(255, 255, 255, 0.03);
-            border: 1px solid rgba(255, 215, 0, 0.2);
-            border-radius: 50px 10px 50px 10px;
-            padding: 40px 20px;
+            background: rgba(20, 25, 45, 0.6);
+            backdrop-filter: blur(12px);
+            border-radius: 40px;
+            padding: 40px 30px;
+            transition: all 0.4s;
+            border: 1px solid rgba(255,215,0,0.2);
             text-align: center;
-            transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
             position: relative;
             overflow: hidden;
-            backdrop-filter: blur(5px);
-            transform-style: preserve-3d;
-            perspective: 1000px;
         }
-
         .feature-card::before {
-            content: "";
+            content: '';
             position: absolute;
-            top: -50%;
-            left: -50%;
-            width: 200%;
-            height: 200%;
-            background: radial-gradient(circle, rgba(255, 215, 0, 0.3) 0%, transparent 70%);
-            opacity: 0;
-            transition: opacity 0.7s;
-            transform: rotate(20deg);
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(243,156,18,0.2), transparent);
+            transition: 0.5s;
         }
-
-        .feature-card:hover {
-            transform: translateY(-20px) scale(1.05) rotateX(5deg);
-            border-color: #f39c12;
-            box-shadow: 0 40px 60px rgba(241, 196, 15, 0.5);
-        }
-
         .feature-card:hover::before {
-            opacity: 1;
+            left: 100%;
         }
-
+        .feature-card:hover {
+            transform: translateY(-15px);
+            border-color: #f39c12;
+            box-shadow: 0 25px 40px rgba(0,0,0,0.4), 0 0 20px rgba(243,156,18,0.4);
+        }
         .feature-card i {
             font-size: 4rem;
-            color: #ffd966;
-            margin-bottom: 20px;
-            filter: drop-shadow(0 0 20px gold);
-            transition: transform 0.5s;
+            color: #f39c12;
+            margin-bottom: 25px;
         }
-
-        .feature-card:hover i {
-            transform: scale(1.3) rotateY(180deg);
-        }
-
         .feature-card h3 {
-            font-size: 1.8rem;
-            margin-bottom: 10px;
+            font-size: 2rem;
+            margin-bottom: 15px;
+        }
+        .feature-card p {
+            font-size: 1.1rem;
+            line-height: 1.6;
+            opacity: 0.85;
         }
 
         /* قسم لماذا نحن */
-        .why-us {
-            background: rgba(0, 0, 0, 0.5);
-            border-radius: 100px 10px 100px 10px;
-            padding: 50px;
-            margin: 50px 0;
-            border: 3px dashed #f1c40f;
+        .stats {
+            display: flex;
+            justify-content: space-around;
+            flex-wrap: wrap;
+            gap: 30px;
+            background: rgba(0,0,0,0.4);
             backdrop-filter: blur(10px);
+            border-radius: 70px;
+            padding: 50px 30px;
+            margin: 60px 0;
+            border: 1px solid rgba(255,215,0,0.3);
+        }
+        .stat-item {
             text-align: center;
-            box-shadow: 0 0 70px rgba(255, 215, 0, 0.4);
         }
-
-        .why-us h2 {
+        .stat-number {
             font-size: 3.5rem;
-            color: #ffe083;
-            margin-bottom: 20px;
-            text-shadow: 0 0 30px orange, 0 0 60px orange;
-        }
-
-        .why-us p {
-            font-size: 2rem;
-            line-height: 1.6;
-        }
-
-        /* زر الدعوة مع تأثير نبض وانعكاس */
-        .cta-button {
-            display: inline-flex;
-            align-items: center;
-            justify-content: center;
-            gap: 20px;
-            background: linear-gradient(45deg, #f39c12, #f1c40f, #ffb347);
-            background-size: 200% 200%;
-            animation: gradientMove 3s ease infinite;
-            color: #1e272e;
-            font-size: 2.5rem;
             font-weight: 900;
-            padding: 30px 80px;
-            border-radius: 150px;
-            text-decoration: none;
-            box-shadow: 0 20px 0 #b7740b, 0 30px 60px rgba(241, 196, 15, 0.8), 0 0 40px gold;
-            transition: all 0.2s ease;
-            border: 4px solid #fff3b0;
-            margin: 40px auto 30px;
-            position: relative;
-            overflow: hidden;
+            color: #f39c12;
+        }
+        .stat-label {
+            font-size: 1.3rem;
         }
 
-        @keyframes gradientMove {
-            0% { background-position: 0% 50%; }
-            50% { background-position: 100% 50%; }
-            100% { background-position: 0% 50%; }
+        /* قسم التنزيل */
+        .download-section {
+            background: linear-gradient(135deg, rgba(243,156,18,0.1), rgba(0,0,0,0.6));
+            border-radius: 60px;
+            padding: 60px;
+            text-align: center;
+            margin: 70px 0;
+            backdrop-filter: blur(12px);
+            border: 1px solid rgba(255,215,0,0.4);
+        }
+        .download-section h2 {
+            font-size: 2.8rem;
+            margin-bottom: 20px;
+        }
+        .download-btn-large {
+            background: linear-gradient(45deg, #27ae60, #2ecc71);
+            padding: 22px 70px;
+            font-size: 2rem;
+            margin-top: 30px;
+            box-shadow: 0 15px 30px rgba(46,204,113,0.4);
+            border: none;
         }
 
-        .cta-button::after {
-            content: "";
-            position: absolute;
-            top: -50%;
-            left: -50%;
-            width: 200%;
-            height: 200%;
-            background: radial-gradient(circle, rgba(255,255,255,0.4) 0%, transparent 70%);
-            opacity: 0;
-            transition: opacity 0.5s;
-        }
-
-        .cta-button:hover::after {
-            opacity: 1;
-        }
-
-        .cta-button:hover {
-            transform: translateY(10px) scale(1.02);
-            box-shadow: 0 10px 0 #b7740b, 0 40px 80px rgba(241, 196, 15, 1), 0 0 70px gold;
-        }
-
-        .cta-button i {
-            font-size: 3rem;
-            transition: transform 0.3s;
-        }
-
-        .cta-button:hover i {
-            transform: translateX(-15px) rotate(10deg);
-        }
-
-        /* قسم التواصل الاجتماعي */
+        /* تواصل اجتماعي */
         .social-section {
             text-align: center;
-            margin-top: 50px;
-            padding-top: 30px;
-            border-top: 2px solid rgba(255, 215, 0, 0.3);
+            margin-top: 60px;
         }
-
-        .social-title {
-            font-size: 2rem;
-            color: #ffd966;
-            margin-bottom: 25px;
-            text-shadow: 0 0 20px gold;
-        }
-
-        .social-icons {
+        .social-icons-group {
             display: flex;
             justify-content: center;
-            gap: 40px;
-            flex-wrap: wrap;
+            gap: 30px;
+            margin: 30px 0;
         }
-
-        .social-item {
+        .social-icon {
+            width: 70px;
+            height: 70px;
+            background: rgba(255,255,255,0.05);
+            border-radius: 30px;
             display: flex;
-            flex-direction: column;
             align-items: center;
-            gap: 10px;
-            background: rgba(0, 0, 0, 0.5);
-            backdrop-filter: blur(10px);
-            padding: 20px 30px;
-            border-radius: 60px;
-            border: 2px solid rgba(255, 215, 0, 0.3);
-            transition: all 0.3s ease;
-            min-width: 200px;
-        }
-
-        .social-item:hover {
-            transform: translateY(-10px);
-            border-color: #f1c40f;
-            box-shadow: 0 0 50px #f1c40f;
-        }
-
-        .social-item i {
-            font-size: 3.5rem;
-        }
-
-        .social-item .fa-whatsapp {
-            color: #25D366;
-            filter: drop-shadow(0 0 20px #25D366);
-        }
-
-        .social-item .fa-facebook {
-            color: #1877F2;
-            filter: drop-shadow(0 0 20px #1877F2);
-        }
-
-        .social-item span {
-            font-size: 1.5rem;
-            font-weight: 700;
+            justify-content: center;
+            font-size: 2.3rem;
+            transition: 0.3s;
+            border: 1px solid rgba(255,215,0,0.3);
+            text-decoration: none;
             color: #fff;
         }
-
-        .social-item a {
-            text-decoration: none;
-            color: inherit;
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            gap: 10px;
+        .social-icon:hover {
+            transform: translateY(-8px);
+            background: #f39c12;
+            color: #0a0c15;
+            border-color: #f39c12;
         }
-
         footer {
             text-align: center;
-            margin-top: 40px;
-            opacity: 0.9;
-            font-size: 1.3rem;
-            text-shadow: 0 0 20px gold;
+            padding: 40px;
+            font-size: 1rem;
+            opacity: 0.7;
         }
 
         @media (max-width: 768px) {
-            h1 { font-size: 2.5rem; }
-            .landing-card { padding: 40px 25px; }
-            .cta-button { font-size: 1.8rem; padding: 20px 40px; }
-            .countdown-item { min-width: 80px; padding: 15px; }
-            .countdown-item span { font-size: 2.2rem; }
-            .social-item { min-width: 150px; padding: 15px 20px; }
-            .social-item i { font-size: 2.5rem; }
-            .social-item span { font-size: 1.2rem; }
+            .navbar {
+                width: 95%;
+                padding: 12px 25px;
+            }
+            .nav-links {
+                display: none;
+            }
+            .hero h1 {
+                font-size: 2.5rem;
+            }
+            .hero {
+                padding: 40px 20px;
+            }
+            .container {
+                padding: 100px 20px 40px;
+            }
+            .btn {
+                padding: 12px 30px;
+                font-size: 1.2rem;
+            }
+            .section-title {
+                font-size: 2.2rem;
+            }
         }
     </style>
 </head>
 <body>
-    <!-- Canvas للخلفية الرمضانية المتقدمة -->
-    <canvas id="ramadanCanvas"></canvas>
-    <div class="overlay-glow"></div>
 
-    <!-- البطاقة الرئيسية -->
-    <div class="landing-card">
-        <h1>
-            <span class="dynamic-text" id="headline"></span>
-        </h1>
+    <canvas id="canvas-bg"></canvas>
 
-        <!-- العد التنازلي -->
-        <div class="countdown" id="countdown"></div>
+    <!-- شريط التنقل -->
+    <nav class="navbar" id="navbar">
+        <div class="logo">TRIX<span style="color:#f39c12;">.dev</span></div>
+        <div class="nav-links">
+            <a href="#home">الرئيسية</a>
+            <a href="#services">الخدمات</a>
+            <a href="#download">التحميل</a>
+            <a href="#contact" class="nav-btn">تواصل</a>
+        </div>
+    </nav>
 
-        <div class="lead" style="font-size: 2rem; margin-bottom: 30px; padding: 25px; background: rgba(0,0,0,0.4); border-radius: 70px; border-right: 6px solid #f39c12; backdrop-filter: blur(5px);">
-            <i class="fas fa-moon" style="margin-left: 15px; color: gold;"></i>
-            هل عندك فكرة لتطبيق أو مشروع رقمي؟ نحولها لواقع ملموس وأرباح حقيقية في رمضان.
+    <div class="container">
+        <!-- القسم الرئيسي -->
+        <div id="home" class="hero" data-aos="fade-up">
+            <h1>حوِّل فكرتك إلى <span class="gradient-text">تطبيق احترافي</span> <br> وابدأ جني الأرباح</h1>
+            <p>نصمم ونطور تطبيقات ومواقع بأحدث التقنيات، مع دعم كامل واستراتيجيات تسويقية لضمان نجاح مشروعك.</p>
+            <div class="btn-group">
+                <a href="#download" class="btn btn-primary"><i class="fas fa-rocket"></i> ابدأ الآن</a>
+                <a href="#contact" class="btn btn-secondary"><i class="fas fa-headset"></i> استشارة مجانية</a>
+            </div>
         </div>
 
-        <h2 style="font-size: 3.2rem; margin: 50px 0 30px; text-align: center; text-shadow: 0 0 30px gold;"><i class="fas fa-gift"></i> ماذا نقدم لك؟</h2>
-        <div class="features-grid">
-            <div class="feature-card"><i class="fas fa-paint-brush"></i><h3>تصميم واجهات حديثة</h3><p>سريعة ومتجاورة تأسر القلوب.</p></div>
-            <div class="feature-card"><i class="fas fa-cubes"></i><h3>تطبيقات مخصصة</h3><p>لشركات، متاجر، أفراد بلمسة إبداعية.</p></div>
-            <div class="feature-card"><i class="fas fa-bullseye"></i><h3>صفحات هبوط جذابة</h3><p>تحول الزوار لعملاء بمعدلات مذهلة.</p></div>
-            <div class="feature-card"><i class="fas fa-tools"></i><h3>أدوات رقمية</h3><p>تسهل إدارة مشروعك بذكاء.</p></div>
-            <div class="feature-card"><i class="fas fa-headset"></i><h3>دعم كامل</h3><p>فريق متواجد 24/7 لضمان نجاحك.</p></div>
-        </div>
-
-        <div class="why-us">
-            <h2><i class="fas fa-fire"></i> لماذا نحن؟</h2>
-            <p>نركز على <strong>رفع المبيعات</strong> وتحقيق نتائج حقيقية، مش بس تصميم جميل. تجربة مستخدم استثنائية وأهداف تتحقق بسرعة الضوء.</p>
-        </div>
-
-        <a href="#" class="cta-button" id="cta">
-            💚 احجز استشارة مجانية الآن
-            <i class="fas fa-arrow-left"></i>
-        </a>
-
-        <!-- قسم التواصل الاجتماعي -->
-        <div class="social-section">
-            <div class="social-title">تواصل معنا مباشرة</div>
-            <div class="social-icons">
-                <!-- واتساب -->
-                <div class="social-item">
-                    <a href="https://wa.me/963997421977" target="_blank">
-                        <i class="fab fa-whatsapp"></i>
-                        <span>+963 997 421 977</span>
-                    </a>
+        <!-- الخدمات -->
+        <div id="services">
+            <h2 class="section-title" data-aos="fade-up">ماذا نقدم لك؟</h2>
+            <div class="features-grid">
+                <div class="feature-card" data-aos="zoom-in" data-aos-delay="100">
+                    <i class="fas fa-mobile-alt"></i>
+                    <h3>تطبيقات أندرويد و iOS</h3>
+                    <p>تطبيقات سريعة، آمنة، وذات واجهات مستخدم مبهرة.</p>
                 </div>
-                <!-- فيسبوك -->
-                <div class="social-item">
-                    <a href="https://www.facebook.com/share/1CZ4uSU3t3/" target="_blank">
-                        <i class="fab fa-facebook"></i>
-                        <span>فيسبوك</span>
-                    </a>
+                <div class="feature-card" data-aos="zoom-in" data-aos-delay="200">
+                    <i class="fas fa-chart-line"></i>
+                    <h3>تحليل وزيادة المبيعات</h3>
+                    <p>استراتيجيات مبنية على البيانات لرفع أرباحك.</p>
+                </div>
+                <div class="feature-card" data-aos="zoom-in" data-aos-delay="300">
+                    <i class="fas fa-cloud-upload-alt"></i>
+                    <h3>استضافة ونشر احترافي</h3>
+                    <p>نرفع مشروعك على خوادم سريعة مع دعم فوري.</p>
+                </div>
+                <div class="feature-card" data-aos="zoom-in" data-aos-delay="400">
+                    <i class="fas fa-shield-alt"></i>
+                    <h3>حماية وأمان</h3>
+                    <p>تشفير وحماية بياناتك بأعلى المعايير.</p>
                 </div>
             </div>
         </div>
 
+        <!-- إحصائيات -->
+        <div class="stats" data-aos="fade-up">
+            <div class="stat-item"><div class="stat-number">+150</div><div class="stat-label">مشروع ناجح</div></div>
+            <div class="stat-item"><div class="stat-number">98%</div><div class="stat-label">رضا العملاء</div></div>
+            <div class="stat-item"><div class="stat-number">24/7</div><div class="stat-label">دعم فني</div></div>
+        </div>
+
+        <!-- قسم تحميل التطبيق -->
+        <div id="download" class="download-section" data-aos="flip-up">
+            <h2><i class="fas fa-download"></i> حمّل تطبيق TRIX الآن</h2>
+            <p>استمتع بتجربة فريدة وحقق أهدافك بسرعة. النسخة التجريبية متاحة مجاناً.</p>
+            <a href="trix.apk" download class="btn btn-primary download-btn-large">
+                <i class="fas fa-android"></i> تحميل APK (TRIX)
+            </a>
+            <p style="margin-top: 25px; font-size: 1rem;">حجم الملف: 22 ميجابايت | متوافق مع أندرويد 9+</p>
+        </div>
+
+        <!-- تواصل -->
+        <div id="contact" class="social-section" data-aos="fade-up">
+            <h2 class="section-title">تواصل معنا</h2>
+            <div class="social-icons-group">
+                <a href="https://wa.me/963997421977" target="_blank" class="social-icon"><i class="fab fa-whatsapp"></i></a>
+                <a href="https://www.facebook.com/share/1CZ4uSU3t3/" target="_blank" class="social-icon"><i class="fab fa-facebook-f"></i></a>
+                <a href="#" class="social-icon"><i class="fab fa-instagram"></i></a>
+                <a href="#" class="social-icon"><i class="fab fa-telegram"></i></a>
+            </div>
+            <p style="margin-top: 20px;">بريد إلكتروني: support@trixapp.com | هاتف: +963 997 421 977</p>
+        </div>
+
         <footer>
-            <p>اكتشف كيف ينمو مشروعك الرقمي ويحقق أرباحًا تتجاوز الخيال هذا رمضان.</p>
+            <p>© 2025 TRIX - جميع الحقوق محفوظة. نبتكر لنصنع النجاح.</p>
         </footer>
     </div>
 
-    <!-- المكتبات والكود -->
+    <!-- المكتبات -->
+    <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1"></script>
     <script>
-        (function() {
-            // ========== خلفية Canvas متقدمة ==========
-            const canvas = document.getElementById('ramadanCanvas');
-            const ctx = canvas.getContext('2d');
-            let width, height;
-            let stars = [];
-            let crescent = { x: 0, y: 0, size: 0 };
-            let clouds = [];
+        // تفعيل AOS
+        AOS.init({ duration: 1000, once: false, mirror: true });
 
-            function initCanvas() {
-                width = window.innerWidth;
-                height = window.innerHeight;
-                canvas.width = width;
-                canvas.height = height;
+        // خلفية ثلاثية الأبعاد متقدمة (نجوم متحركة + جسيمات)
+        const canvas = document.getElementById('canvas-bg');
+        const ctx = canvas.getContext('2d');
+        let width, height;
+        let particles = [];
 
-                // نجوم كثيرة ومتلألئة
-                const starCount = 400;
-                stars = [];
-                for (let i = 0; i < starCount; i++) {
-                    stars.push({
-                        x: Math.random() * width,
-                        y: Math.random() * height,
-                        radius: Math.random() * 4 + 1.5,
-                        originalRadius: Math.random() * 4 + 1.5,
-                        speedX: (Math.random() - 0.5) * 0.1,
-                        speedY: (Math.random() - 0.5) * 0.1,
-                        brightness: Math.random() * 0.7 + 0.3,
-                        color: `hsl(${Math.random() * 30 + 45}, 90%, ${Math.random() * 30 + 60}%)`,
-                        pulseSpeed: Math.random() * 0.05 + 0.02,
-                        pulsePhase: Math.random() * Math.PI * 2
-                    });
-                }
+        function resizeCanvas() {
+            width = window.innerWidth;
+            height = window.innerHeight;
+            canvas.width = width;
+            canvas.height = height;
+        }
 
-                // سحب ذهبية خفيفة
-                const cloudCount = 8;
-                clouds = [];
-                for (let i = 0; i < cloudCount; i++) {
-                    clouds.push({
-                        x: Math.random() * width,
-                        y: Math.random() * height * 0.3 + height * 0.1,
-                        size: Math.random() * 150 + 100,
-                        speed: Math.random() * 0.2 + 0.1,
-                        opacity: Math.random() * 0.2 + 0.1
-                    });
-                }
-
-                // موقع الهلال
-                crescent = {
-                    x: width * 0.1,
-                    y: height * 0.1,
-                    size: Math.min(width, height) * 0.08,
-                    angle: 0
-                };
-            }
-
-            function drawCanvas() {
-                ctx.clearRect(0, 0, width, height);
-
-                // تدرج خلفية
-                const gradient = ctx.createRadialGradient(width/2, height/2, 0, width/2, height/2, width/2);
-                gradient.addColorStop(0, '#0c0f1f');
-                gradient.addColorStop(0.7, '#030514');
-                ctx.fillStyle = gradient;
-                ctx.fillRect(0, 0, width, height);
-
-                // رسم السحب الذهبية
-                clouds.forEach(cloud => {
-                    ctx.save();
-                    ctx.translate(cloud.x, cloud.y);
-                    ctx.globalAlpha = cloud.opacity;
-                    ctx.filter = 'blur(25px)';
-                    ctx.beginPath();
-                    ctx.arc(0, 0, cloud.size, 0, Math.PI * 2);
-                    ctx.fillStyle = '#ffd966';
-                    ctx.fill();
-                    ctx.restore();
-
-                    cloud.x += cloud.speed;
-                    if (cloud.x > width + cloud.size) cloud.x = -cloud.size;
+        function initParticles() {
+            particles = [];
+            for (let i = 0; i < 300; i++) {
+                particles.push({
+                    x: Math.random() * width,
+                    y: Math.random() * height,
+                    radius: Math.random() * 3 + 1,
+                    alpha: Math.random() * 0.6 + 0.2,
+                    speedX: (Math.random() - 0.5) * 0.3,
+                    speedY: (Math.random() - 0.5) * 0.2,
+                    color: `hsl(${Math.random() * 40 + 30}, 80%, 65%)`
                 });
-
-                // رسم النجوم
-                stars.forEach(star => {
-                    star.radius = star.originalRadius + Math.sin(Date.now() * star.pulseSpeed + star.pulsePhase) * 0.8;
-                    
-                    ctx.save();
-                    ctx.translate(star.x, star.y);
-                    ctx.globalAlpha = star.brightness;
-                    ctx.shadowColor = 'gold';
-                    ctx.shadowBlur = 15;
-                    ctx.beginPath();
-                    ctx.arc(0, 0, star.radius, 0, Math.PI * 2);
-                    ctx.fillStyle = star.color;
-                    ctx.fill();
-                    ctx.restore();
-
-                    star.x += star.speedX;
-                    star.y += star.speedY;
-                    if (star.x < 0) star.x = width;
-                    if (star.x > width) star.x = 0;
-                    if (star.y < 0) star.y = height;
-                    if (star.y > height) star.y = 0;
-                });
-
-                // رسم الهلال المتلألئ
-                ctx.save();
-                ctx.translate(crescent.x, crescent.y);
-                ctx.shadowColor = '#ffaa00';
-                ctx.shadowBlur = 60;
-                ctx.font = `${crescent.size}px 'Arial', sans-serif`;
-                ctx.fillStyle = '#fff9e6';
-                ctx.textAlign = 'center';
-                ctx.textBaseline = 'middle';
-                ctx.fillText('🌙', 0, 0);
-                ctx.restore();
-
-                crescent.angle += 0.002;
-                crescent.x = width * 0.1 + Math.sin(crescent.angle) * 20;
-                crescent.y = height * 0.1 + Math.cos(crescent.angle * 0.5) * 10;
-
-                requestAnimationFrame(drawCanvas);
             }
+        }
 
-            window.addEventListener('resize', () => {
-                initCanvas();
-            });
-
-            initCanvas();
-            drawCanvas();
-
-            // ========== تأثير الكتابة الديناميكية المتقدمة ==========
-            const headlineEl = document.getElementById('headline');
-            const phrases = [
-                '🚀 حوّل فكرتك إلى تطبيق احترافي يرفع أرباحك',
-                '🌙 رمضان .. فرصة لتنمية مشروعك الرقمي',
-                '💡 اصنع مستقبلك الرقمي مع أفضل المطورين'
-            ];
-            let phraseIndex = 0;
-            let charIndex = 0;
-            let isDeleting = false;
-            let currentText = '';
-
-            function typeEffect() {
+        function draw() {
+            if (!ctx) return;
+            ctx.clearRect(0, 0, width, height);
+            // تدرج خلفية
+            const grad = ctx.createLinearGradient(0, 0, 0, height);
+            grad.addColorStop(0, '#050814');
+            grad.addColorStop(1, '#12172b');
+            ctx.fillStyle = grad;
+            ctx.fillRect(0, 0, width, height);
             
+            // رسم نجوم متحركة
+            for (let p of particles) {
+                ctx.beginPath();
+                ctx.arc(p.x, p.y, p.radius, 0, Math.PI * 2);
+                ctx.fillStyle = p.color;
+                ctx.globalAlpha = p.alpha + Math.sin(Date.now() * 0.002 + p.x) * 0.2;
+                ctx.fill();
+                p.x += p.speedX;
+                p.y += p.speedY;
+                if (p.x < 0) p.x = width;
+                if (p.x > width) p.x = 0;
+                if (p.y < 0) p.y = height;
+                if (p.y > height) p.y = 0;
+            }
+            requestAnimationFrame(draw);
+        }
+
+        window.addEventListener('resize', () => {
+            resizeCanvas();
+            initParticles();
+        });
+        resizeCanvas();
+        initParticles();
+        draw();
+
+        // تأثير تمرير شريط التنقل
+        window.addEventListener('scroll', () => {
+            const navbar = document.getElementById('navbar');
+            if (window.scrollY > 50) {
+                navbar.classList.add('scrolled');
+            } else {
+                navbar.classList.remove('scrolled');
+            }
+        });
+
+        // تأثير كونفيتي عند تحميل التطبيق
+        const downloadBtn = document.querySelector('.download-btn-large');
+        if (downloadBtn) {
+            downloadBtn.addEventListener('click', (e) => {
+                canvasConfetti({ particleCount: 200, spread: 100, origin: { y: 0.6 }, colors: ['#f1c40f', '#2ecc71', '#e67e22'] });
+                setTimeout(() => {
+                    canvasConfetti({ particleCount: 500, spread: 120, origin: { y: 0.5, x: 0.5 }, startVelocity: 15 });
+                }, 200);
+            });
+        }
+
+        // إزالة التنقل السريع للأزرار
+        document.querySelectorAll('.nav-links a, .btn-primary[href="#download"], .btn-secondary[href="#contact"]').forEach(anchor => {
+            anchor.addEventListener('click', function(e) {
+                const target = document.querySelector(this.getAttribute('href'));
+                if (target) {
+                    e.preventDefault();
+                    target.scrollIntoView({ behavior: 'smooth' });
+                }
+            });
+        });
+    </script>
+</body>
+</html>
